@@ -37,7 +37,7 @@ void handle_line(char *line);
 int print_wiki(char *subject);
 
 /* variables */
-const char  *usage              = "usage: wikid [-hlr] <subject>";
+const char  *usage              = "usage: wikid [-hlrt] <subject>";
 unsigned    total_line_count    = 0;
 unsigned    section_line_count  = 0;
 bool        blank_line          = false;
