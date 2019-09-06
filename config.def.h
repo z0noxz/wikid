@@ -3,14 +3,25 @@
 
 char language[]         = "en";
 char temp_file[]        = "/tmp/__wikidtmp.XXXXXX";
-const char webpage[]    = "https://xx.wikipedia.org/w/api.php"
+
+const Service services[] = {
+    { "wikipedia",      "https://xx.wikipedia.org/w/api.php"
                         "?format=json"
                         "&action=query"
                         "&prop=extracts"
                         "&exlimit=1"
                         "&explaintext"
                         "&redirects"
-                        "&titles=";
+                        "&titles="},
+    { "wiktionary",     "https://xx.wiktionary.org/w/api.php"
+                        "?format=json"
+                        "&action=query"
+                        "&prop=extracts"
+                        "&exlimit=1"
+                        "&explaintext"
+                        "&redirects"
+                        "&titles="},
+};
 
 /* cleanup mappings for wikipedia responses
  * NOTE: the replacement cannot be greater in size than the entity itself. If

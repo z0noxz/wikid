@@ -37,7 +37,8 @@ void handle_line(char *line);
 int print_wiki(char *subject);
 
 /* variables */
-const char  *usage              = "usage: wikid [-hlrt] <subject>";
+const char  *usage              = "usage: wikid [-hlrsSt] <subject>";
+const char  *webpage            = services[0].template;
 unsigned    total_line_count    = 0;
 unsigned    section_line_count  = 0;
 bool        blank_line          = false;
@@ -308,6 +309,7 @@ int main(int argc, char *argv[])
     int     buffer_size = 80;
     char    buffer[buffer_size];
     int     input_size;
+    int     h;
     char    c;
 
     /* validate input from STDIN */
@@ -331,7 +333,7 @@ int main(int argc, char *argv[])
     }
 
     if (state == 0) {
-        while ((c = getopt(argc, argv, "hl:rt")) != -1) {
+        while ((c = getopt(argc, argv, "hl:rs:St")) != -1) {
             switch (c) {
             case 'l':
                 memmove(language, optarg, 2);
@@ -339,6 +341,16 @@ int main(int argc, char *argv[])
             case 'r':
                 global_options |= 1U << 0;
                 break;
+            case 's':
+                h = atoi(optarg);
+                if (h < 0 || h >= LENGTH(services))
+                    h = 0;
+                webpage = services[h].template;
+                break;
+            case 'S':
+                for (h = 0; h < LENGTH(services); h++)
+                    fprintf(stderr, "%d: %s\n", h, services[h].name);
+                return 0;
             case 't':
                 global_options |= 1U << 1;
                 break;
@@ -348,6 +360,8 @@ int main(int argc, char *argv[])
                 fprintf(stderr, " -h          Print this help text and exit\n");
                 fprintf(stderr, " -l CODE     Language code in ISO 639-1 format\n");
                 fprintf(stderr, " -r          Print wiki in raw format\n");
+                fprintf(stderr, " -s ID       Specify service ID\n");
+                fprintf(stderr, " -S          List services and IDs and exit\n");
                 fprintf(stderr, " -t          Print wiki in text only format\n");
 
                 free(input);

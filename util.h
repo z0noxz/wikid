@@ -4,6 +4,11 @@ typedef enum {
 } bool;
 
 typedef struct {
+    const char *name;
+    const char *template;
+} Service;
+
+typedef struct {
     const char *entity;
     const char *replacement;
 } Dictionary;
